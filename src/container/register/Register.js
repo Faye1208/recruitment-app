@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Logo from '../../component/logo/logo';
-import { List, InputItem, Radio, WingBlank, WhiteSpace, Button } from 'antd-mobile';
+import { List, InputItem, Radio, WhiteSpace, Button } from 'antd-mobile';
 
 
 class Register extends Component{
