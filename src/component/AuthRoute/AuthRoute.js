@@ -37,7 +37,6 @@ class AuthRoute extends Component {
     render () {
         return (
             <div className="auth-route-wrapper">
-                判断跳转的地方
             </div>
         );
     }
