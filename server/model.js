@@ -27,14 +27,13 @@ const models = {
     },
     chat: {}
 };
-// mongoose.model()
 
 // 批量生成模型
 for(let m in models){
     mongoose.model(m, new mongoose.Schema(models[m]))
 }
 
-// mongoose 工具函数库
+// mongoose工具函数库
 module.exports = {
     getModel:function (name) {
         return mongoose.model(name)

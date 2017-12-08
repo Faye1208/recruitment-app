@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { loadData } from '../../redux/user.redux';
 
 @withRouter
+
+// connect要写在withRouter后面
+@connect(
+    null,
+    { loadData }
+)
 
 class AuthRoute extends Component {
     componentDidMount () {
@@ -13,13 +21,14 @@ class AuthRoute extends Component {
         if (publicList.indexOf(pathname) > -1){
             return null;
         }
-
+        // 存放到user.redux.js
         // 需要从后端获取用户信息，才决定怎么跳转页面
         axios.get('/user/info')
             .then(res => {
                 if (res.status === 200) {
                     if (res.data.code === 0) {
-                        // 有登录信息
+                        // 有登录信息的
+                        this.props.loadData(res.data.data);
                     } else {
                         this.props.history.push('/login');
                         console.log(this.props);
@@ -35,10 +44,7 @@ class AuthRoute extends Component {
     }
 
     render () {
-        return (
-            <div className="auth-route-wrapper">
-            </div>
-        );
+        return null;
     }
 }
 
