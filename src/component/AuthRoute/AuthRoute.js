@@ -7,6 +7,7 @@ import { loadData } from '../../redux/user.redux';
 @withRouter
 
 // connect要写在withRouter后面
+//  不需要state时，可以将其设置为null
 @connect(
     null,
     { loadData }
@@ -21,7 +22,6 @@ class AuthRoute extends Component {
         if (publicList.indexOf(pathname) > -1){
             return null;
         }
-        // 存放到user.redux.js
         // 需要从后端获取用户信息，才决定怎么跳转页面
         axios.get('/user/info')
             .then(res => {
@@ -33,8 +33,10 @@ class AuthRoute extends Component {
                         this.props.history.push('/login');
                         console.log(this.props);
                     }
+                    // res.data保存了后端返回(响应)的内容，即后端response.json()函数里面的内容
                     console.log(res.data);
                 }
+
             });
         //  判断用户状态，是否已经登录
         //  判断现在的url地址，在login页面则不需要跳转，在用户中心需要跳转

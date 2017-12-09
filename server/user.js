@@ -9,7 +9,31 @@ const utils = require('utility');
 // 定义一个统一的查询条件，把不想显示的字段过滤掉其中'__v'是文档的版本号
 const _filter = {'pwd': 0, '__v': 0};
 
-// 调试列表
+
+// 校验前后端是否联调成功
+Router.get('/info', function (request, response) {
+    // 初步用于调试url跳转,code:1时跳转登录页面，code:0时不需要跳转登录页
+    // return response.json({code: 0});
+
+    // 校验用户有没有cookie，需要读取cookie
+    const {userid} = request.cookies;
+    if (!userid) {
+        return response.json({code: 1});
+    }
+    // 或者使用findById()
+    User.findOne({_id: userid}, _filter, function (err, doc) {
+        if (err) {
+            return response.json({code: 1, msg: '后端出错了'})
+        }
+        if (doc) {
+            return response.json({code: 0, data: doc})
+        }
+    });
+
+
+});
+
+// 调试列表, 用于查看插入到数据库里到数据
 Router.get('/list', function (request, response) {
     // User.remove({} ,function (err,doc) {});
     User.find({}, function (err, doc) {
@@ -17,6 +41,7 @@ Router.get('/list', function (request, response) {
     })
 });
 
+// 登录接口
 Router.post('/login', function (request, response) {
     const {user, pwd} = request.body;
     // 添加一个{pwd: 0}的对象，返回的查询数据就不会显示pwd
@@ -30,6 +55,7 @@ Router.post('/login', function (request, response) {
     })
 });
 
+// 注册接口
 Router.post('/register', function (request, response) {
     // if(!request.body){
     //     return res.sendStatus(400);
@@ -61,23 +87,6 @@ Router.post('/register', function (request, response) {
             return response.json({code: 0, data: {user}});
 
         });
-    });
-});
-
-Router.get('/info', function (request, response) {
-    // 需要校验用户有没有cookie，读取cookie
-    const {userid} = request.cookies;
-    if (!userid) {
-        return res.json({code: 1});
-    }
-    // 或者使用findById()
-    User.findOne({_id: userid}, _filter, function (err, doc) {
-        if (err) {
-            return response.json({code: 1, msg: '后端出错了'})
-        }
-        if (doc) {
-            return response.json({code: 0, data: doc})
-        }
     });
 });
 

@@ -17,7 +17,7 @@ const store = createStore(reducer, compose(
 ));
 
 function Boss () {
-    return <h2>Boss</h2>
+    return <h2>Boss页面</h2>
 }
 
 ReactDOM.render(
