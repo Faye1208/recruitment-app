@@ -44,7 +44,7 @@ Router.get('/list', function (request, response) {
 // 登录接口
 Router.post('/login', function (request, response) {
     const {user, pwd} = request.body;
-    // 添加一个{pwd: 0}的对象，返回的查询数据就不会显示pwd
+    // 添加第二个{pwd: 0}的对象，返回的查询数据就不会显示pwd
     User.findOne({user, pwd: md5Pwd(pwd)}, _filter, function (err, doc) {
         if (!doc) {
             return response.json({code: 1, msg: '用户名或密码错误'});
@@ -85,7 +85,6 @@ Router.post('/register', function (request, response) {
             const {user, type, _id} = doc;
             response.cookie('useid', _id);
             return response.json({code: 0, data: {user}});
-
         });
     });
 });

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {getRedirectPath} from "./util";
+import {getRedirectPath} from "../util";
 
 // action
 const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -50,6 +50,7 @@ export function loadData (userinfo) {
 }
 
 export function register ({user, pwd, repeatpwd, type}) {
+    // 判断用户输入的信息是否合法
     if (!user || !pwd || !type) {
         return errorMsg('请输入用户名和密码');
     }
@@ -78,8 +79,9 @@ export function login ({user, pwd}) {
         axios.post('/user/login', {user, pwd})
             .then(res => {
                 if (res.status === 200 && res.data.code === 0) {
-                    // dispatch(registerSuccess({user, pwd, type}));
+                    // response.data是后端返回的所用内容，其中这些内容里面有个data的属性专门存储查询数据库以后得到的用户信息
                     dispatch(loginSuccess(res.data.data));
+                    console.log(res.data);
                 } else {
                     dispatch(errorMsg(res.data.msg));
                 }

@@ -6,7 +6,6 @@ mongoose.connect(DB_URL, {
 });
 
 // 设计字段
-// 创建模型
 const models = {
     user: {
         'user': {type: String, require: true},
