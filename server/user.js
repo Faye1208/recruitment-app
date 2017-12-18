@@ -29,16 +29,31 @@ Router.get('/info', function (request, response) {
             return response.json({code: 0, data: doc})
         }
     });
-
-
 });
 
 // 调试列表, 用于查看插入到数据库里到数据
 Router.get('/list', function (request, response) {
+    const {type} = request.query;
     // User.remove({} ,function (err,doc) {});
-    User.find({}, function (err, doc) {
-        return response.json(doc);
+    User.find({type}, function (err, doc) {
+        return response.json({code: 0, data: doc});
     })
+});
+
+// 接收参数的接口
+Router.post('/update', function (request, response) {
+    const {userid} = request.cookies;
+    if (!userid) {
+        return response.json({code: 1});
+    }
+    const body = request.body;
+    User.findByIdAndUpdate(userid, body, function (err, doc) {
+        const data = Object.assign({}, {
+            user: doc.user,
+            type: doc.type
+        }, body);
+        return response.json({data, code: 0});
+    });
 });
 
 // 登录接口

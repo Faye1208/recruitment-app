@@ -1,33 +1,43 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
+import {createStore, applyMiddleware, compose} from 'redux';
+import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
-import { BrowserRouter, Route } from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+
 import reducer from './reducer';
 import registerServiceWorker from './registerServiceWorker';
 import './config';
+import './index.css';
 import Login from './container/Login/Login';
 import Register from './container/register/Register';
+import BossInfo from './container/BossInfo/BossInfo';
+import GeniusInfo from './container/GeniusInfo/GeniusInfo';
 import AuthRoute from './component/AuthRoute/AuthRoute';
+import Dashboard from './component/dashboard/dashboard';
 
 const store = createStore(reducer, compose(
     applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : () => {}
+    window.devToolsExtension ? window.devToolsExtension() : () => {
+    }
 ));
 
-function Boss () {
-    return <h2>Boss页面</h2>
-}
+// function boss () {
+//     return <h2>Boss页面</h2>
+// }
 
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <div>
                 <AuthRoute/>
-                <Route path="/login" component={Login}></Route>
-                <Route path="/register" component={Register}></Route>
-                <Route path="/boss" component={Boss}></Route>
+                <Switch>
+                    <Route path="/bossinfo" component={BossInfo}></Route>
+                    <Route path="/geniusinfo" component={GeniusInfo}></Route>
+                    <Route path="/login" component={Login}></Route>
+                    <Route path="/register" component={Register}></Route>
+                    <Route component={Dashboard}/>
+                </Switch>
             </div>
         </BrowserRouter>
     </Provider>,

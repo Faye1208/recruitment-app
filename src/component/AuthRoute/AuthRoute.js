@@ -45,7 +45,7 @@ class AuthRoute extends Component {
     }
 
     render () {
-        return null;
+        return (<h3>跳转页面</h3>);
     }
 }
 
