@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Card, WhiteSpace, WingBlank} from 'antd-mobile';
 import {connect} from 'react-redux';
 import {getUserList} from "../../redux/chatuser.redux";
 import UserCard from '../usercard/usercard';

@@ -30,7 +30,7 @@ class Login extends Component {
         });
     }
 
-    handleLogin(){
+    handleLogin () {
         this.props.login(this.state);
     }
 
@@ -42,16 +42,17 @@ class Login extends Component {
     render () {
         return (
             <div className="login-container-wrapper">
-                {this.props.redirectTo ? <Redirect to={this.props.redirectTo}/> : null}
+                {this.props.redirectTo && this.props.redirectTo !== '/login' ?
+                    <Redirect to={this.props.redirectTo}/> : null}
                 <Logo/>
                 {this.props.msg ? <p className="error-msg">{this.props.msg}</p> : null}
                 <WingBlank>
                     <List>
                         <InputItem
-                            onChange = {v => this.handleChange('user', v)}
+                            onChange={v => this.handleChange('user', v)}
                         >用户：</InputItem>
                         <InputItem type="password"
-                            onChange = {v => this.handleChange('pwd', v)}
+                                   onChange={v => this.handleChange('pwd', v)}
                         >密码：</InputItem>
                     </List>
                     <WhiteSpace/>

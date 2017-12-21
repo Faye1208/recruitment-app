@@ -1,3 +1,4 @@
+
 .error-msg {
     color: chocolate;
     padding-left: 10px;
@@ -17,4 +18,9 @@
 
 .page-content{
     padding: 45px 5px;
+}
+
+.content{
+    position: relative;
+    z-index: 90;
 }

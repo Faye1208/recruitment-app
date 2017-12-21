@@ -1,18 +1,14 @@
 import React, {Component} from 'react';
-import BossInfo from "../../container/BossInfo/BossInfo";
 import {connect} from 'react-redux';
 import {NavBar} from 'antd-mobile';
 import {Route, Switch} from 'react-router-dom';
 import NavLinkBar from '../navlink/navlink';
 import Boss from '../../component/boss/boss';
 import Genius from '../../component/genius/genius';
+import User from '../User/User';
 
 function Msg () {
     return (<h3>消息列表页</h3>);
-}
-
-function User () {
-    return (<h3>个人中心页</h3>);
 }
 
 @connect(
@@ -20,11 +16,6 @@ function User () {
 )
 
 class DashBoard extends Component {
-    constructor (props) {
-        super(props);
-
-    }
-
     render () {
         const {pathname} = this.props.location;
         const user = this.props.user;
@@ -63,7 +54,7 @@ class DashBoard extends Component {
         return (
             <div className="dashboard-wrapper">
                 <NavBar mode="dark" className="fixed-header">{navList.find(v => v.path === pathname).title}</NavBar>
-                <div className="content" style={{marginTop: '45px'}}>
+                <div className="content">
                     <Switch>
                         {navList.map(v => (
                             <Route key={v.path} path={v.path} component={v.component}/>
