@@ -51,9 +51,11 @@ class DashBoard extends Component {
                 component: User
             }
         ];
+        const navItem = navList.find(v => v.path === pathname);
         return (
             <div className="dashboard-wrapper">
-                <NavBar mode="dark" className="fixed-header">{navList.find(v => v.path === pathname).title}</NavBar>
+                <NavBar mode="dark"
+                        className="fixed-header">{user.user ? (navItem ? navItem.title :null) : null}</NavBar>
                 <div className="content">
                     <Switch>
                         {navList.map(v => (
