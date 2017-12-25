@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {NavBar} from 'antd-mobile';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch,Redirect} from 'react-router-dom';
 import NavLinkBar from '../navlink/navlink';
 import Boss from '../../component/boss/boss';
 import Genius from '../../component/genius/genius';
@@ -55,7 +55,7 @@ class DashBoard extends Component {
         return (
             <div className="dashboard-wrapper">
                 <NavBar mode="dark"
-                        className="fixed-header">{user.user ? (navItem ? navItem.title :null) : null}</NavBar>
+                        className="fixed-header">{user.user ? (navItem ? navItem.title :null) : <Redirect to="/login" />}</NavBar>
                 <div className="content">
                     <Switch>
                         {navList.map(v => (

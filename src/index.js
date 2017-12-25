@@ -17,11 +17,12 @@ import AuthRoute from './component/AuthRoute/AuthRoute';
 import Dashboard from './component/dashboard/dashboard';
 import Chat from './component/chat/chat';
 
-const store = createStore(reducer, compose(
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : () => {
-    }
-));
+const store = createStore(reducer, applyMiddleware(thunk));
+
+// const store = createStore(reducer, compose(
+//     applyMiddleware(thunk),
+//     window.devToolsExtension ? window.devToolsExtension() : () => {}
+// ));
 
 // function boss () {
 //     return <h2>Boss页面</h2>
