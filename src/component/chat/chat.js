@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 // import io from 'socket.io-client';
-import {List, InputItem, NavBar} from 'antd-mobile';
+import {List, InputItem, NavBar, Icon, Grid} from 'antd-mobile';
 import {connect} from 'react-redux';
 import {getMsgList, sendMsg, receiveMsg} from "../../redux/chat.redux";
+import {user} from "../../redux/user.redux";
+import {getChatId} from "../../util";
 
 /*
  * 由于目前的前端端口与后端socket.io的端口之间
@@ -23,7 +25,8 @@ class Chat extends Component {
         super(props);
         this.state = {
             text: '',
-            msg: []
+            msg: [],
+            shoeEmoji: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -40,10 +43,18 @@ class Chat extends Component {
          * 避免刷新页面的时候，聊天记录没有了，
          * 因此需要在Chat组件渲染以后调用一下以下函数
          */
-        if(!this.props.chat.chatmsg.length){
+        console.log('页面加载完成');
+        if (!this.props.chat.chatmsg.length) {
             this.props.getMsgList();
             this.props.receiveMsg();
         }
+
+    }
+
+    fixCarousel () {
+        setTimeout(function () {
+            window.dispatchEvent(new Event('resize'))
+        }, 0);
     }
 
     handleChange (v) {
@@ -66,24 +77,44 @@ class Chat extends Component {
 
     render () {
         console.log(this.props);
-        const user = this.props.match.params.user;
+        const touser = this.props.match.params.user;
         const Item = List.Item;
+        const users = this.props.chat.users;
+        const chatid = getChatId(touser, this.props.user._id);
+        // 过滤后的信息
+        const chatmsgs = this.props.chat.chatmsg.filter(v => v.chatid === chatid);
+        const emoji = '😀 😁 😂 🤣 😃 😄 😅 😆 😉 😊 😋 😎 😍 😘 😗 😙 😚 ☺ 🙂  🤗 🤩 🤔 🤨 😐 😑 😶 🙄 😏 😣 😥 😮  🤐 😯 😪 😫 😴 😌 😛 😝 🤤 😒 😓 😔 😕 🙃 🤑 😲 ☹ 🙁 😖 😞 😟 😤 😢 😭 😦 😧 😨 😩 🤯 😬 😳 🤪 😵 😡 😠 🤬 😷 🤒 🤕 🤢 🤮 🤧 😇 🤠 🤡 🤥 🤫 🤭 🧐 🤓 😈 👿 👹 👺 💀 👻 👽 🤖 😺 😸 😹 😻 😼 😽 🙀 😿 😾 👶 👦 👧 👨 👩 👴 👵 👨‍⚕️  👩‍ 👨‍🎓 👩‍🎓 👨‍⚖️ 👩‍⚖️ 👨‍🌾  👩‍🌾 👨‍🍳 👩‍🍳 👨‍🔧 👩‍🔧 👨‍🏭  👩‍🏭 👨‍💼 👩‍💼 👨‍🔬 👩‍🔬 👨‍💻 👩‍💻 👨👩‍🎤 👨‍🎨 👩‍🎨 👨‍✈️  👩‍✈️ 👨‍🚀 👩‍🚀 👨‍🚒 👩‍🚒 👮 👮‍♂️ 👮‍♀️ 🕵 🕵️‍♂️ 🕵️‍♀️ 💂 💂‍♂️  💂‍♀️  👷 👷‍♂️ 👷‍♀️ 🤴 👸 👳 👳‍♂️ 👳‍♀️ 👲 🧕 🧔 👱 👱‍♂️ 👱‍♀️ 🤵 👰 🤰 🤱 👼 🎅 🤶 🧙‍♀️ 🧙‍♂️ 🧚‍♀️ 🧚‍♂️ 🧛‍♀️ 🧛‍♂️ 🧜‍♀️ 🧜‍♂️ 🧝‍♀️ 🧝‍♂️ 🧞‍♀️ 🧞‍♂️ 🧟‍♀️ 🧟‍♂️ 🙍 🙍‍♂️ 🙍‍♀️ 🙎 🙎‍♂️ 🙎‍♀️ 🙅 🙅‍♂️ 🙅‍♀️ 🙆 🙆‍♂️ 🙆‍♀️ 💁 💁‍♂️ 💁‍♀️ 🙋 🙋‍♂️ 🙋‍♀️ 🙇 🙇‍♂️ 🙇‍♀️ 🤦‍♂️ 🤦‍♀️ 🤷 🤷‍♂️ 🤷‍♀️ 💆 💆‍♂️ 💆‍♀️ 💇 💇‍♂️ 💇‍♀️ 🚶 🚶‍♂️ 🚶‍♀️ 🏃 🏃‍♂️ 🏃‍♀️ 💃 🕺 👯 👯‍♂️ 👯‍♀️ 🧖‍♀️ 🧖‍♂️ 🕴 🗣 👤 👥 👫 👬 👭 💏 👨‍❤️‍💋‍👨 👩‍❤️‍💋‍👩 💑 👨‍❤️‍👨 👩‍❤️‍👩 👪 👨‍👩‍👦 👨‍👩‍👧 👨‍👩‍👧‍👦 👨‍👩‍👦‍👦 👨‍👩‍👧‍👧 👨‍👨‍👦 👨‍👨‍👧 👨‍👨‍👧‍👦 👨‍👨‍👦‍👦 👨‍👨‍👧‍👧 👩‍👩‍👦 👩‍👩‍👧 👩‍👩‍👧‍👦 👩‍👩‍👦‍👦 👩‍👩‍👧‍👧 👨‍👦 👨‍👦‍👦 👨‍👧 👨‍👧‍👦 👨‍👧‍👧 👩‍👦 👩‍👦‍👦 👩‍👧 👩‍👧‍👦 👩👧‍👧 🤳 💪 👈 👉 ☝ 👆 🖕 👇 ✌ 🤞 🖖 🤘 🖐 ✋ 👌 👍 👎 ✊ 👊 🤛 🤜 🤚 👋 🤟 ✍ 👏 👐 🙌 🤲 🙏 🤝 💅 👂 👃 👣 👀 👁 🧠 👅 👄 💋 👓 🕶 👔 👕 👖 🧣 🧤 🧥 🧦 👗 👘 👙 👚 👛 👜 👝 🎒 👞 👟 👠 👡 👢 👑 👒 🎩 🎓 🧢 ⛑ 💄 💍 🌂 ☂ 💼'
+            .split(' ')
+            .filter(v => v)
+            .map(v => ({text: v}));
+        if (!users[touser]) {
+            return null;
+        }
         return (
             <div id='chat-page'>
-                <NavBar mode="dark">
-                    {user}
+                <NavBar
+                    mode="dark"
+                    icon={<Icon type="left"/>}
+                    onLeftClick={() => {
+                        this.props.history.goBack()
+                    }}
+                >
+                    {users[touser].name}
                 </NavBar>
 
-                {this.props.chat.chatmsg.map(v => {
-                    return v.from === user ? (
+                {/*将this.props.chat.chatmsg(所有的信息)改为过滤后的信息chatmsgs*/}
+                {chatmsgs.map(v => {
+                    const avatar = require(`../img/${users[v.from].avatar}.png`);
+                    return v.from === touser ? (
                         <List key={v._id}>
                             <Item
+                                thumb={avatar}
                             >{v.content}</Item>
                         </List>
                     ) : (
                         <List key={v._id}>
                             <Item
-                                extra={'avatar'}
+                                extra={<img src={avatar}/>}
                                 className="chat-me"
                             >{v.content}</Item>
 
@@ -97,10 +128,35 @@ class Chat extends Component {
                             placeholder='请输入'
                             value={this.state.text}
                             onChange={this.handleChange}
-                            extra={<span onClick={this.handleSubmit}>发送</span>}
+                            extra={
+                                <div>
+                                    <span
+                                        style={{marginRight: 15}}
+                                        onClick={() => {
+                                            this.setState({showEmoji: !this.state.emoji});
+                                            this.fixCarousel();
+                                        }}
+                                    >🤣</span>
+                                    <span onClick={this.handleSubmit}>发送</span>
+                                </div>
+                            }
                         >
                         </InputItem>
                     </List>
+                    {this.state.showEmoji && <Grid
+                        data={emoji}
+                        columnNum={9}
+                        carouselMaxRow={4}
+                        isCarousel={true}
+                        onClick={(el) => {
+                            console.log(el);
+                            this.setState({
+                                text: this.state.text + el.text
+                            })
+                        }}
+                    />
+                    }
+
                 </div>
             </div>
         );

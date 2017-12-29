@@ -32,7 +32,26 @@ Router.get('/info', function (request, response) {
     });
 });
 
-// 调试列表, 用于查看插入到数据库里到数据
+// 调试列表, 用于查看插入到数据库里用户信息数据
+Router.get('/userdoc', function (request, response) {
+    console.log(request);
+    User.find({}, function (err, userdoc) {
+        if (userdoc) {
+            return response.json({userdoc});
+        }
+    });
+
+});
+
+// 调试列表, 用于查看插入到数据库里的用户聊天数据
+Router.get('/chatdoc', function (request, response) {
+    Chat.find({}, function (err, chatdoc) {
+        if (!err) {
+            return response.json({data: chatdoc});
+        }
+    });
+});
+
 Router.get('/list', function (request, response) {
     const {type} = request.query;
     // User.remove({} ,function (err,doc) {});
@@ -43,14 +62,17 @@ Router.get('/list', function (request, response) {
 
 Router.get('/getmsglist', function (request, response) {
     const user = request.cookies.userid;
-    User.find({}, function (e, userdoc) {
+    User.find({}, function (err, userdoc) {
         let users = {};
+        // 过滤出需要的信息：用户名和用户头像
         userdoc.forEach(v => {
             users[v._id] = {name: v.user, avatar: v.avatar};
         });
-        Chat.find({'$or': [{from: user, to: user}]}, function (err, doc) {
+        // $or 过滤条件，把我发的信息和发给我的信息都查出来
+        Chat.find({'$or': [{from: user}, {to: user}]}, function (err, doc) {
+            console.log(doc);
             if (!err) {
-                return response.json({code: 0, msgs: doc})
+                return response.json({code: 0, msgs: doc, users: users})
             }
         });
     });

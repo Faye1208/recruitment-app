@@ -34,6 +34,15 @@
     text-align: right;
 }
 
+#chat-page .am-grid-icon{
+    display: none;
+}
+
+#chat-page .am-grid-text{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .stick-footer{
     position: absolute;
     z-index: 10;
