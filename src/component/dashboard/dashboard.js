@@ -1,21 +1,28 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {NavBar} from 'antd-mobile';
-import {Route, Switch,Redirect} from 'react-router-dom';
+import {Route, Switch, Redirect} from 'react-router-dom';
 import NavLinkBar from '../navlink/navlink';
 import Boss from '../../component/boss/boss';
 import Genius from '../../component/genius/genius';
 import User from '../User/User';
+import {getMsgList, receiveMsg} from "../../redux/chat.redux";
 
 function Msg () {
     return (<h3>消息列表页</h3>);
 }
 
 @connect(
-    state => state
+    state => state,
+    {getMsgList, receiveMsg}
 )
 
 class DashBoard extends Component {
+    componentDidMount () {
+        this.props.getMsgList();
+        this.props.receiveMsg();
+    }
+
     render () {
         const {pathname} = this.props.location;
         const user = this.props.user;
@@ -55,7 +62,7 @@ class DashBoard extends Component {
         return (
             <div className="dashboard-wrapper">
                 <NavBar mode="dark"
-                        className="fixed-header">{user.user ? (navItem ? navItem.title :null) : <Redirect to="/login" />}</NavBar>
+                        className="fixed-header">{navItem.title}</NavBar>
                 <div className="content">
                     <Switch>
                         {navList.map(v => (

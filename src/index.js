@@ -24,10 +24,6 @@ const store = createStore(reducer, applyMiddleware(thunk));
 //     window.devToolsExtension ? window.devToolsExtension() : () => {}
 // ));
 
-// function boss () {
-//     return <h2>Boss页面</h2>
-// }
-
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>

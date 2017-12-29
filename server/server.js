@@ -30,18 +30,28 @@ app.use('/user', userRouter);
 // http是默认自带的
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+const Model = require('./model');
+const Chat = Model.getModel('chat');
+// Chat.remove({},function (err,doc) {
+//
+// });
 
 /*
  * 监听连接成功以后执行一个callback，
  * callback中的参数socket是一个当前连接，而io是一个全局的连接
  */
-io.on('connection',function (socket) {
+io.on('connection', function (socket) {
     // 连接成功的调试信息
     console.log('user login');
     // 监听sendmsg,data为接收的数据
     socket.on('sendmsg', function (data) {
         console.log(data);
-        io.emit('receive-msg',data);
+        const {from, to, msg} = data;
+        const chatid = [from, to].sort().join('_');
+        Chat.create({chatid, from, to, content: msg}, function (err, doc) {
+            io.emit('receivemsg', Object.assign({}, doc._doc));
+        });
+        // io.emit('receive-msg', data);
     });
 });
 
@@ -50,6 +60,6 @@ io.on('connection',function (socket) {
 //     console.log("server port at 9093");
 // });
 
-server.listen(9093,function () {
+server.listen(9093, function () {
     console.log("server port at 9093");
 });

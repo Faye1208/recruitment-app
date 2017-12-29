@@ -5,6 +5,7 @@ const Router = express.Router();
 // 引入model
 const model = require('./model');
 const User = model.getModel('user');
+const Chat = model.getModel('chat');
 const utils = require('utility');
 // 定义一个统一的查询条件，把不想显示的字段过滤掉其中'__v'是文档的版本号
 const _filter = {'pwd': 0, '__v': 0};
@@ -38,6 +39,21 @@ Router.get('/list', function (request, response) {
     User.find({type}, function (err, doc) {
         return response.json({code: 0, data: doc});
     })
+});
+
+Router.get('/getmsglist', function (request, response) {
+    const user = request.cookies.userid;
+    User.find({}, function (e, userdoc) {
+        let users = {};
+        userdoc.forEach(v => {
+            users[v._id] = {name: v.user, avatar: v.avatar};
+        });
+        Chat.find({'$or': [{from: user, to: user}]}, function (err, doc) {
+            if (!err) {
+                return response.json({code: 0, msgs: doc})
+            }
+        });
+    });
 });
 
 // 接收参数的接口
