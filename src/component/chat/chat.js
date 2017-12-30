@@ -50,7 +50,13 @@ class Chat extends Component {
         }
 
     }
-
+    
+    // 修复antd的Grid组件一加载只显示以后的bug
+    fixCarousel () {
+        setTimeout(function () {
+            window.dispatchEvent(new Event('resize'))
+        }, 0);
+    }
     fixCarousel () {
         setTimeout(function () {
             window.dispatchEvent(new Event('resize'))
@@ -87,6 +93,7 @@ class Chat extends Component {
             .split(' ')
             .filter(v => v)
             .map(v => ({text: v}));
+        // 防止数据还没加载完的时候引起错误
         if (!users[touser]) {
             return null;
         }
