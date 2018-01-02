@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 // import io from 'socket.io-client';
 import {List, InputItem, NavBar, Icon, Grid} from 'antd-mobile';
 import {connect} from 'react-redux';
-import {getMsgList, sendMsg, receiveMsg} from "../../redux/chat.redux";
+import {getMsgList, sendMsg, receiveMsg, readMsg} from "../../redux/chat.redux";
 import {user} from "../../redux/user.redux";
 import {getChatId} from "../../util";
 
@@ -17,7 +17,7 @@ import {getChatId} from "../../util";
 
 @connect(
     state => state,
-    {getMsgList, sendMsg, receiveMsg}
+    {getMsgList, sendMsg, receiveMsg, readMsg}
 )
 
 class Chat extends Component {
@@ -48,15 +48,20 @@ class Chat extends Component {
             this.props.getMsgList();
             this.props.receiveMsg();
         }
+        // const to = this.props.match.params.user;
+        // this.props.getMsgList();
+        // this.props.receiveMsg();
+        // this.props.readMsg(to);
 
     }
-    
-    // 修复antd的Grid组件一加载只显示以后的bug
-    fixCarousel () {
-        setTimeout(function () {
-            window.dispatchEvent(new Event('resize'))
-        }, 0);
+
+    componentWillUnmount(){
+        console.log('unmount');
+        const to = this.props.match.params.user;
+        this.props.readMsg(to);
     }
+
+    // 修复antd的Grid组件一加载只显示以后的bug
     fixCarousel () {
         setTimeout(function () {
             window.dispatchEvent(new Event('resize'))
@@ -140,7 +145,7 @@ class Chat extends Component {
                                     <span
                                         style={{marginRight: 15}}
                                         onClick={() => {
-                                            this.setState({showEmoji: !this.state.emoji});
+                                            this.setState({showEmoji: !this.state.showEmoji});
                                             this.fixCarousel();
                                         }}
                                     >🤣</span>

@@ -70,11 +70,34 @@ Router.get('/getmsglist', function (request, response) {
         });
         // $or 过滤条件，把我发的信息和发给我的信息都查出来
         Chat.find({'$or': [{from: user}, {to: user}]}, function (err, doc) {
-            console.log(doc);
+            // console.log(doc);
             if (!err) {
                 return response.json({code: 0, msgs: doc, users: users})
             }
         });
+    });
+});
+
+Router.post('/readmsg', function (request, response) {
+    const userid = request.cookies.userid;
+    const {from} = request.body;
+    console.log(userid, from);
+    /*
+     * update方法默认只修改查找到的第一条数据，
+     * 第一个对象是查找条件，
+     * 第三个对象表示查找该模型所用符合条件的数据
+     */
+    Chat.update({from, to: userid}, {'$set': {read: true}}, {'multi': true}, function (err, doc) {
+        /* update方法的回调函数返回的doc对象包括
+         * n:表示查找到的数据的数量
+         * nModified:表示已经修改的数据的数量
+         * ok: 操作成功，没有出错
+         */
+        console.log(doc);
+        if (!err) {
+            return response.json({code: 0, num: doc.nModified});
+        }
+        return response.json({code: 1, msg: '修改失败'});
     });
 });
 
