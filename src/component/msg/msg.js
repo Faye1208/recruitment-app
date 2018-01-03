@@ -10,8 +10,7 @@ import {List, Badge} from 'antd-mobile';
 
 class Msg extends Component {
     componentDidMount () {
-        // 刷新页面
-        // window.location.href = window.location.href;
+        console.log('msg page loaded');
     }
 
     getLast (arr) {
@@ -34,7 +33,6 @@ class Msg extends Component {
         });
         const users = this.props.chat.users;
         const userid = this.props.user._id;
-        console.log(this.props);
         console.log("msgGroup:", msgGroup);
         console.log('chatlist:', chatList);
         return (

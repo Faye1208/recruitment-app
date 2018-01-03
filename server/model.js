@@ -24,19 +24,19 @@ const models = {
         // 薪酬
         'money': {type: String}
     },
-    chat:{
+    chat: {
         // 标识两个人的聊天信息
-        'chatid':{type: String, require: true},
+        'chatid': {type: String, require: true},
         // 'from'从哪个用户发出来
         'from': {type: String, require: true},
         // 'to'发给哪个用户
         'to': {type: String, require: true},
         // 信息是否已读，只对'to'的user设置
-        'read': {type: Boolean, require: false},
+        'read': {type: Boolean, require: true, default: false},
         // 信息的内容
         'content': {type: String, require: true, default: ''},
         // 按照时间先后顺序排列信息
-        'create_time': {type: Number, default: new Date().getTime()}
+        'create_time': {type: Number, require: true, default: new Date().getTime()}
     }
 };
 

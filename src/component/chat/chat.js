@@ -56,7 +56,7 @@ class Chat extends Component {
     }
 
     componentWillUnmount(){
-        // console.log('unmount');
+        console.log('unmount');
         // const to = this.props.match.params.user;
         // this.props.readMsg(to);
     }
@@ -108,7 +108,7 @@ class Chat extends Component {
                     mode="dark"
                     icon={<Icon type="left"/>}
                     onLeftClick={() => {
-                        this.props.history.goBack()
+                        this.props.history.goBack();
                     }}
                 >
                     {users[touser].name}
