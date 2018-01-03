@@ -32,9 +32,7 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const Model = require('./model');
 const Chat = Model.getModel('chat');
-// Chat.remove({},function (err,doc) {
-//
-// });
+// Chat.remove({},function (err,doc) {});
 
 /*
  * 监听连接成功以后执行一个callback，

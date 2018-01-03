@@ -48,17 +48,17 @@ class Chat extends Component {
             this.props.getMsgList();
             this.props.receiveMsg();
         }
-        // const to = this.props.match.params.user;
+        const to = this.props.match.params.user;
         // this.props.getMsgList();
         // this.props.receiveMsg();
-        // this.props.readMsg(to);
+        this.props.readMsg(to);
 
     }
 
     componentWillUnmount(){
-        console.log('unmount');
-        const to = this.props.match.params.user;
-        this.props.readMsg(to);
+        // console.log('unmount');
+        // const to = this.props.match.params.user;
+        // this.props.readMsg(to);
     }
 
     // 修复antd的Grid组件一加载只显示以后的bug

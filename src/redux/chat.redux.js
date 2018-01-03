@@ -64,6 +64,7 @@ export function readMsg (from) {
             .then(res => {
                 const userid = getState().user._id;
                 if (res.state === 200 && res.data.code === 0) {
+                    console.log(res.data.num);
                     dispatch(msgRead({userid, from, num: res.data.num}));
                 }
             });
