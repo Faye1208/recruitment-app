@@ -14,8 +14,8 @@ class Boss extends Component {
     }
 
     render () {
-        console.log(this.state);
-        console.log(this.props);
+        // console.log(this.state);
+        // console.log(this.props);
         return (
             <UserCard userlist={this.props.userlist}/>
         );

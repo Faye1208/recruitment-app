@@ -48,7 +48,7 @@ io.on('connection', function (socket) {
         const chatid = [from, to].sort().join('_');
         const create_time = new Date().getTime();
         Chat.create({chatid, from, to, create_time, content: msg}, function (err, doc) {
-            io.emit('receivemsg', Object.assign({}, doc._doc));
+            io.emit('receive-msg', Object.assign({}, doc._doc));
         });
         // io.emit('receive-msg', data);
     });

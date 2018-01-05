@@ -2,17 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {List, Badge} from 'antd-mobile';
 
-// import {withRouter} from
-
 @connect(
     state => state
 )
 
 class Msg extends Component {
-    componentDidMount () {
-        console.log('msg page loaded');
-    }
-
     getLast (arr) {
         return arr[arr.length - 1];
     }
@@ -33,16 +27,16 @@ class Msg extends Component {
         });
         const users = this.props.chat.users;
         const userid = this.props.user._id;
-        console.log("msgGroup:", msgGroup);
-        console.log('chatlist:', chatList);
+        // console.log("msgGroup:", msgGroup);
+        // console.log('chatlist:', chatList);
         return (
             <div>
                 {chatList.filter(v => v[0].from === userid || v[0].to === userid).map(v => {
-                    console.log(v);
+                    // console.log(v);
                     const lastItem = this.getLast(v);
                     const targetId = v[0].from === userid ? v[0].to : v[0].from;
                     const unreadNum = v.filter(v => !v.read && v.to === userid).length;
-                    console.log(lastItem);
+                    // console.log(lastItem);
                     if (!users[targetId]) {
                         return null;
                     }
