@@ -11,6 +11,10 @@ const app = express();
 app.use(bodyParser.json());
 // 使用中间件cookieParser，从而可以解析cookie
 app.use(cookieParser());
+
+// 清除聊天记录
+// Chat.remove({}, function (err, doc) {});
+
 /*
  * app.use开启中间件，如果中间件是路由：
  * 第一个参数定义一个url前缀(字符串类型),
