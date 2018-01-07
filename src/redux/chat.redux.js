@@ -30,8 +30,7 @@ export function chat (state = initState, action) {
             const n = action.payload.to === action.userid ? 1 : 0;
             return {
                 ...state,
-                chatmsg: [...state.chatmsg,
-                    action.payload],
+                chatmsg: [...state.chatmsg, action.payload],
                 unread: state.unread + n
             };
         case MSG_READ:
