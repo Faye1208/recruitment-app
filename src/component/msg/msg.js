@@ -18,14 +18,19 @@ class Msg extends Component {
             msgGroup[v.chatid] = msgGroup[v.chatid] || [];
             msgGroup[v.chatid].push(v);
         });
-        const Item = List.Item;
-        const Brief = Item.Brief;
+
+        // 分组以后取出属性值得到一个新的数组然后在根据每项的最后一条消息的创建时间排序
         const chatList = Object.values(msgGroup).sort((a, b) => {
             const a_last = this.getLast(a).create_time;
             const b_last = this.getLast(b).create_time;
             return b_last - a_last;
         });
+        const Item = List.Item;
+        const Brief = Item.Brief;
+
+        // 取出聊天用户数据，以便后面可以读取聊天对象的个人资料
         const users = this.props.chat.users;
+        // 取出当前用户的id
         const userid = this.props.user._id;
         // console.log("msgGroup:", msgGroup);
         // console.log('chatlist:', chatList);
@@ -35,7 +40,7 @@ class Msg extends Component {
                     // console.log(v);
                     const lastItem = this.getLast(v);
                     const targetId = v[0].from === userid ? v[0].to : v[0].from;
-                    const unreadNum = v.filter(v => !v.read && v.to === userid).length;
+                    const unreadNum = v.filter(item => !item.read && item.to === userid).length;
                     // console.log(lastItem);
                     if (!users[targetId]) {
                         return null;
