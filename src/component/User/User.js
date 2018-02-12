@@ -20,10 +20,9 @@ class User extends Component {
         const alert = Modal.alert;
 
         alert('退出', '确认退出应用吗？', [
-            {text: '取消', onPress: () => console.log('取消')},
+            {text: '取消', onPress: () => {}},
             {
                 text: '确认', onPress: () => {
-                console.log('确认');
 
                 // 清除cookie
                 browserCookie.erase('userid');
@@ -37,7 +36,6 @@ class User extends Component {
             }
             }
         ]);
-        console.log('logout');
     }
 
     render () {

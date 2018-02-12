@@ -32,9 +32,9 @@ class DashBoard extends Component {
         const navList = [
             {
                 path: '/boss',
-                text: '牛人',
+                text: 'Genius',
                 icon: 'boss',
-                title: '牛人列表',
+                title: 'Genius',
                 component: Boss,
                 hide: user.type === 'genius'
             },
@@ -42,22 +42,22 @@ class DashBoard extends Component {
                 path: '/genius',
                 text: 'boss',
                 icon: 'job',
-                title: 'Boss列表',
+                title: 'Boss',
                 component: Genius,
                 hide: user.type === 'boss'
             },
             {
                 path: '/msg',
-                text: '消息',
+                text: 'Message',
                 icon: 'msg',
-                title: '消息列表',
+                title: 'Message',
                 component: Msg
             },
             {
                 path: '/me',
-                text: '我',
+                text: 'Me',
                 icon: 'user',
-                title: '个人中心',
+                title: 'Personal Center',
                 component: User
             }
         ];
