@@ -34,7 +34,7 @@ Router.get('/info', function (request, response) {
 
 // 调试列表, 用于查看插入到数据库里用户信息数据
 Router.get('/userdoc', function (request, response) {
-    console.log(request);
+    // console.log(request);
     User.find({}, function (err, userdoc) {
         if (userdoc) {
             return response.json({userdoc});
@@ -81,7 +81,7 @@ Router.get('/getmsglist', function (request, response) {
 Router.post('/readmsg', function (request, response) {
     const userid = request.cookies.userid;
     const {from} = request.body;
-    console.log(userid, from);
+    // console.log(userid, from);
     /*
      * update方法默认只修改查找到的第一条数据，
      * 第一个对象是查找条件，
@@ -93,7 +93,7 @@ Router.post('/readmsg', function (request, response) {
          * nModified:表示已经修改的数据的数量
          * ok: 操作成功，没有出错
          */
-        console.log(doc);
+        // console.log(doc);
         if (!err) {
             return response.json({code: 0, num: doc.nModified});
         }
@@ -136,7 +136,7 @@ Router.post('/register', function (request, response) {
     // if(!request.body){
     //     return res.sendStatus(400);
     // }
-    console.log(request.body);
+    // console.log(request.body);
     const {user, pwd, type} = request.body;
     // 先查找一下数据库是否存在这个用户
     User.findOne({user}, function (err, doc) {

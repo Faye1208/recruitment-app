@@ -42,10 +42,10 @@ const Chat = Model.getModel('chat');
  */
 io.on('connection', function (socket) {
     // 连接成功的调试信息
-    console.log('user login');
+    // console.log('user login');
     // 监听sendmsg,data为接收的数据
     socket.on('sendmsg', function (data) {
-        console.log(data);
+        // console.log(data);
         const {from, to, msg} = data;
         const chatid = [from, to].sort().join('_');
         const create_time = new Date().getTime();
