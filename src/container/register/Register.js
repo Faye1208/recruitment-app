@@ -68,7 +68,7 @@ class Register extends Component {
                         <RadioItem
                             checked={this.props.state.type === 'genius'}
                             onChange={() => this.props.handleChange('type', 'genius')}
-                        >牛人</RadioItem>
+                        >Genius</RadioItem>
                         <RadioItem
                             checked={this.props.state.type === 'boss'}
                             onChange={() => this.props.handleChange('type', 'boss')}
