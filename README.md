@@ -1,14 +1,13 @@
- ### 技术栈
+ ## 技术栈
 
 
  + 前端：react-create-app + react16 + redux + react-router 4 + axios + antd-mobile 2
 
  + 后台：express + mongodb
 
- ---
 
 
- ### 运行项目
+ ## 运行项目
 
   + 获取项目:
 
@@ -22,15 +21,15 @@
 
         npm install
 
-  + 启动后台服务器：
+  + 启动后台：
 
         node server/server.js
 
-  + 启动前端服务器：
+  + 启动前端：
 
         npm start
 
-  
+
 
 
 
