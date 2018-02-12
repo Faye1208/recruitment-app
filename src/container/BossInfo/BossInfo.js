@@ -42,43 +42,45 @@ class BossInfo extends Component {
         return (
             <div className="bossinfo-page-wrapper">
                 {redirectTo && redirectTo !== pathname ? <Redirect to={this.props.redirectTo}/> : null}
-                <NavBar mode="dark">信息完善</NavBar>
-                <AvatarSelector
-                    selectAvatar={(imgname) => {
-                        this.setState({
-                            avatar: imgname
-                        })
-                    }}
-                />
-                <WingBlank>
-                    <List>
-                        <InputItem onChange={value => {
-                            this.handleChange('title', value)
-                        }}>招聘职位</InputItem>
-                        <InputItem onChange={value => {
-                            this.handleChange('company', value)
-                        }}>公司名称</InputItem>
-                        <InputItem onChange={value => {
-                            this.handleChange('money', value)
-                        }}>职位薪资</InputItem>
-                        <TextareaItem
-                            onChange={
-                                value => {
-                                    this.handleChange('desc', value)
-                                }
-                            }
-                            rows={3}
-                            autoHeight
-                            title="职位简介">
-                        </TextareaItem>
-                    </List>
-                    <WhiteSpace/>
-                    <Button
-                        onClick={() => {
-                            this.props.update(this.state)
+                <NavBar mode="dark">个人信息</NavBar>
+                <div className="header-space">
+                    <AvatarSelector
+                        selectAvatar={(imgname) => {
+                            this.setState({
+                                avatar: imgname
+                            })
                         }}
-                        type="primary">保 存</Button>
-                </WingBlank>
+                    />
+                    <WingBlank>
+                        <List>
+                            <InputItem onChange={value => {
+                                this.handleChange('title', value)
+                            }}>招聘职位</InputItem>
+                            <InputItem onChange={value => {
+                                this.handleChange('company', value)
+                            }}>公司名称</InputItem>
+                            <InputItem onChange={value => {
+                                this.handleChange('money', value)
+                            }}>职位薪资</InputItem>
+                            <TextareaItem
+                                onChange={
+                                    value => {
+                                        this.handleChange('desc', value)
+                                    }
+                                }
+                                rows={3}
+                                autoHeight
+                                title="职位简介">
+                            </TextareaItem>
+                        </List>
+                        <WhiteSpace/>
+                        <Button
+                            onClick={() => {
+                                this.props.update(this.state)
+                            }}
+                            type="primary">保 存</Button>
+                    </WingBlank>
+                </div>
             </div>
         );
     }

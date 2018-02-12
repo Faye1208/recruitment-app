@@ -19,7 +19,7 @@ const initState = {
 export function chat (state = initState, action) {
     switch (action.type) {
         case MSG_LIST:
-            // console.log(action.payload);
+            //console.log(action.payload);
             return {
                 ...state,
                 users: action.payload.users,
@@ -34,7 +34,7 @@ export function chat (state = initState, action) {
                 unread: state.unread + n
             };
         case MSG_READ:
-            const {from, num} = action.payload;
+            const {from} = action.payload;
             // console.log(num);
             return {
                 ...state,
@@ -55,19 +55,15 @@ function msgRecv (msg, userid) {
 }
 
 function msgRead ({userid, from, num}) {
-    console.log({from, userid, num});
     return {type: MSG_READ, payload: {from, userid, num}}
 }
 
 export function readMsg (from) {
-    console.log('read-msg');
     return (dispatch, getState) => {
         axios.post('/user/readmsg', {from})
             .then(res => {
-                // console.log('res',res);
                 const userid = getState().user._id;
                 if (res.status === 200 && res.data.code === 0) {
-                    // console.log("num:",res.data.num);
                     dispatch(msgRead({userid, from, num: res.data.num}));
                 }
             });
@@ -77,7 +73,6 @@ export function readMsg (from) {
 export function receiveMsg () {
     return (dispatch, getState) => {
         socket.on('receive-msg', function (data) {
-            console.log('receivemsg', data);
             const userid = getState().user._id;
             dispatch(msgRecv(data, userid));
         });
@@ -85,14 +80,12 @@ export function receiveMsg () {
 }
 
 export function sendMsg ({from, to, msg}) {
-    console.log('send');
     return dispatch => {
         socket.emit('sendmsg', {from, to, msg});
     }
 }
 
 export function getMsgList () {
-    console.log('getmsglist');
     /*
      * getState 可以获取应用的所有state,
      * 因此可以在需要使用其它地方的数据的时候使用该参数

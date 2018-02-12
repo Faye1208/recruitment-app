@@ -9,7 +9,7 @@ export default function appForm (Comp) {
         }
 
         handleChange (key, val) {
-            console.log(key,val);
+            // console.log(key,val);
             this.setState({
                 // key是一个变量，要记得加中括号
                 [key]: val

@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import {List, InputItem, NavBar, Icon, Grid} from 'antd-mobile';
 import {connect} from 'react-redux';
 import {getMsgList, sendMsg, receiveMsg, readMsg} from "../../redux/chat.redux";
-import {user} from "../../redux/user.redux";
 import {getChatId} from "../../util";
 
 /*
@@ -44,24 +43,19 @@ class Chat extends Component {
          * 因此需要在Chat组件渲染以后调用一下以下函数
          */
         if (!this.props.chat.chatmsg.length) {
-            console.log('chat page loaded:', this.props.chat.chatmsg.length);
+            // console.log('chat page loaded:', this.props.chat.chatmsg.length);
             this.props.getMsgList();
-            // this.props.receiveMsg();
+            this.props.receiveMsg();
         }
-        // const to = this.props.match.params.user;
-        // this.props.getMsgList();
-        // this.props.receiveMsg();
-        // this.props.readMsg(to);
 
     }
 
     componentWillUnmount () {
-        // console.log('unmount');
         const to = this.props.match.params.user;
         this.props.readMsg(to);
     }
 
-    // 修复antd的Grid组件一加载只显示以后的bug
+    // 修复antd的Grid组件一加载只显示一行的bug
     fixCarousel () {
         setTimeout(function () {
             window.dispatchEvent(new Event('resize'))
@@ -75,7 +69,6 @@ class Chat extends Component {
     }
 
     handleSubmit (e) {
-        console.log("send msg");
         // socket.emit('sendmsg', {text: this.state.text});
         // this.setState({text: ''});
         const from = this.props.user._id;
@@ -103,7 +96,7 @@ class Chat extends Component {
         if (!users[touser]) {
             return null;
         }
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <div id='chat-page'>
                 <NavBar
@@ -116,25 +109,30 @@ class Chat extends Component {
                     {users[touser].name}
                 </NavBar>
 
-                {/*将this.props.chat.chatmsg(所有的信息)改为过滤后的信息chatmsgs*/}
-                {chatmsgs.map(v => {
-                    const avatar = require(`../img/${users[v.from].avatar}.png`);
-                    return v.from === touser ? (
-                        <List key={v._id}>
-                            <Item
-                                thumb={avatar}
-                            >{v.content}</Item>
-                        </List>
-                    ) : (
-                        <List key={v._id}>
-                            <Item
-                                extra={<img src={avatar}/>}
-                                className="chat-me"
-                            >{v.content}</Item>
+                <div className="header-space footer-space">
+                    {/*将this.props.chat.chatmsg(所有的信息)改为过滤后的信息chatmsgs*/}
+                    {chatmsgs.map(v => {
+                        const avatar = require(`../img/${users[v.from].avatar}.png`);
+                        return v.from === touser ? (
+                            <List key={v._id}>
+                                <Item
+                                    thumb={avatar}
+                                >{v.content}</Item>
+                            </List>
+                        ) : (
+                            <List key={v._id}>
+                                <Item
+                                    extra={<img src={avatar} alt="avatar" />}
+                                    className="chat-me"
+                                >{v.content}</Item>
 
-                        </List>
-                    )
-                })}
+                            </List>
+                        )
+                    })}
+
+                </div>
+
+
 
                 <div className="stick-footer">
                     <List>
@@ -163,7 +161,6 @@ class Chat extends Component {
                         carouselMaxRow={4}
                         isCarousel={true}
                         onClick={(el) => {
-                            // console.log(el);
                             this.setState({
                                 text: this.state.text + el.text
                             })

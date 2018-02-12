@@ -1,19 +1,22 @@
-import React, {Component} from 'react';
+import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadData } from '../../redux/user.redux';
 
+// 把非路由组件转化为路由组件
 @withRouter
 
-// connect要写在withRouter后面
-//  不需要state时，可以将其设置为null
+/*
+ * connect要写在withRouter后面
+ * 不需要state时，可以将其设置为null
+ */
 @connect(
     null,
     { loadData }
 )
 
-class AuthRoute extends Component {
+class AuthRoute extends React.Component {
     componentDidMount () {
         //  判断现在的url地址，如果正处于登录或者注册页面不需要登录信息即可访问
         const publicList = ['/login', '/register'];
@@ -35,7 +38,7 @@ class AuthRoute extends Component {
                         console.log(this.props);
                     }
                     // res.data保存了后端返回(响应)的内容，即后端response.json()函数里面的内容
-                    console.log(res.data);
+                    // console.log(res.data);
                 }
 
             });
@@ -45,7 +48,7 @@ class AuthRoute extends Component {
     }
 
     render () {
-        return (<h3>跳转页面</h3>);
+        return null;
     }
 }
 

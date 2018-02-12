@@ -28,13 +28,14 @@ ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <div>
-                <AuthRoute/>
+                <AuthRoute />
                 <Switch>
+                    <Route path="/" exact component={Login} />
                     <Route path="/bossinfo" component={BossInfo}></Route>
                     <Route path="/geniusinfo" component={GeniusInfo}></Route>
                     <Route path="/login" component={Login}></Route>
                     <Route path="/register" component={Register}></Route>
-                    <Route path="/chat/:user" component={Chat}/>
+                    <Route path="/chat/:user" component={Chat} />
                     <Route component={Dashboard}/>
                 </Switch>
             </div>

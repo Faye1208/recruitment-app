@@ -10,40 +10,50 @@
     width: 100%;
 }
 
-.fixed-header,.am-navbar{
+.fixed-header, .am-navbar {
     position: fixed;
-    top:0;
+    top: 0;
     width: 100%;
+    z-index: 5;
 }
 
-.page-content{
+.header-space {
+    position: relative;
+    top: 55px;
+}
+
+.footer-space{
+    padding-bottom: 55px;
+}
+
+.page-content {
     padding: 45px 5px;
 }
 
-.content{
+.content {
     position: relative;
     z-index: 90;
 }
 
-#chat-page .chat-me .am-list-extra{
+#chat-page .chat-me .am-list-extra {
     flex-basis: auto;
 }
 
-#chat-page .chat-me .am-list-content{
+#chat-page .chat-me .am-list-content {
     padding-right: 15px;
     text-align: right;
 }
 
-#chat-page .am-grid-icon{
+#chat-page .am-grid-icon {
     display: none;
 }
 
-#chat-page .am-grid-text{
+#chat-page .am-grid-text {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-.stick-footer{
+.stick-footer {
     position: fixed;
     z-index: 10;
     bottom: 0;

@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {NavBar} from 'antd-mobile';
-import {Route, Switch, Redirect} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import NavLinkBar from '../navlink/navlink';
 import Boss from '../../component/boss/boss';
 import Genius from '../../component/genius/genius';
 import User from '../User/User';
 import Msg from '../msg/msg';
 import {getMsgList, receiveMsg} from "../../redux/chat.redux";
-
 
 @connect(
     state => state,
@@ -18,12 +17,10 @@ import {getMsgList, receiveMsg} from "../../redux/chat.redux";
 class DashBoard extends Component {
     componentDidMount () {
         if (!this.props.chat.chatmsg.length) {
-            console.log('dashboard page loaded:',this.props.chat.chatmsg.length);
+            // console.log('dashboard page loaded:',this.props.chat.chatmsg.length);
             this.props.getMsgList();
             this.props.receiveMsg();
         }
-        // this.props.getMsgList();
-        // this.props.receiveMsg();
     }
 
     componentWillMount () {
@@ -68,15 +65,21 @@ class DashBoard extends Component {
         return (
             <div className="dashboard-wrapper">
                 <NavBar mode="dark"
-                        className="fixed-header">{navItem.title}</NavBar>
-                <div className="content">
-                    <Switch>
-                        {navList.map(v => (
-                            <Route key={v.path} path={v.path} component={v.component}/>
-                        ))}
-                    </Switch>
+                        className="fixed-header"
+                >
+                    {navItem.title}
+                </NavBar>
+                <div className="header-space">
+                    <div className="content">
+                        <Switch>
+                            {navList.map(v => (
+                                <Route key={v.path} path={v.path} component={v.component}/>
+                            ))}
+                        </Switch>
+                    </div>
+                    <NavLinkBar data={navList}/>
                 </div>
-                <NavLinkBar data={navList}/>
+
             </div>
         );
 

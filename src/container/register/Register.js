@@ -40,12 +40,12 @@ class Register extends Component {
 
     handleRegister () {
         this.props.register(this.props.state);
-        console.log(this.props.state);
+        // console.log(this.props.state);
     }
 
     render () {
         const RadioItem = Radio.RadioItem;
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <div className="register-container-wrapper">
                 {this.props.redirectTo ? <Redirect to={this.props.redirectTo}/> : null}
